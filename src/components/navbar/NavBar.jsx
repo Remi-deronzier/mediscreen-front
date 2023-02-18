@@ -27,26 +27,24 @@ function classNames(...classes) {
 
 export default function NavBar() {
   return (
-    <div className="min-h-full">
-      <Disclosure as="nav" className="bg-gray-800">
-        {({ open }) => (
-          <>
-            <NavBarContent
-              navigation={navigation}
-              classNames={classNames}
-              user={user}
-              userNavigation={userNavigation}
-              open={open}
-            />
-            <MobileMenuContent
-              navigation={navigation}
-              classNames={classNames}
-              user={user}
-              userNavigation={userNavigation}
-            />
-          </>
-        )}
-      </Disclosure>
-    </div>
+    <Disclosure as="nav" className="bg-gray-800">
+      {({ open }) => (
+        <>
+          <NavBarContent
+            navigation={navigation}
+            classNames={classNames}
+            user={user}
+            userNavigation={userNavigation}
+            open={open}
+          />
+          <MobileMenuContent
+            navigation={navigation}
+            classNames={classNames}
+            user={user}
+            userNavigation={userNavigation}
+          />
+        </>
+      )}
+    </Disclosure>
   );
 }
