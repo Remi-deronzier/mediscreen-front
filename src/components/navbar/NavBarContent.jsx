@@ -15,7 +15,7 @@ export default function NavBarContent({
       <div className="flex h-16 items-center justify-between">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <Link to="/">
+            <Link to="/" onClick={() => updateNavigation("/")}>
               <img className="h-8 w-8" src={logo} alt="Mediscreen" />
             </Link>
           </div>
