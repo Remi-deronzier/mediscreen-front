@@ -15,22 +15,11 @@ export default function Footer() {
       </span>
       <ul className="flex flex-wrap items-center mt-3 text-sm text-white sm:mt-0 font-medium">
         <li>
-          <a href="#" className="mr-4 hover:underline md:mr-6 ">
-            About
-          </a>
-        </li>
-        <li>
-          <a href="#" className="mr-4 hover:underline md:mr-6">
-            Privacy Policy
-          </a>
-        </li>
-        <li>
-          <a href="#" className="mr-4 hover:underline md:mr-6">
-            Licensing
-          </a>
-        </li>
-        <li>
-          <a href="#" className="hover:underline">
+          <a
+            href="https://github.com/Remi-deronzier"
+            target="_blank"
+            className="hover:underline"
+          >
             Contact
           </a>
         </li>

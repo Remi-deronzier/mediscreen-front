@@ -1,12 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 
-export default function MobileMenuContent({
-  navigation,
-  classNames,
-  user,
-  userNavigation,
-}) {
+export default function MobileMenuContent({ navigation, classNames, user }) {
   return (
     <Disclosure.Panel className="md:hidden">
       <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
@@ -50,18 +45,6 @@ export default function MobileMenuContent({
             <span className="sr-only">View notifications</span>
             <BellIcon className="h-6 w-6" aria-hidden="true" />
           </button>
-        </div>
-        <div className="mt-3 space-y-1 px-2">
-          {userNavigation.map((item) => (
-            <Disclosure.Button
-              key={item.name}
-              as="a"
-              href={item.href}
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-            >
-              {item.name}
-            </Disclosure.Button>
-          ))}
         </div>
       </div>
     </Disclosure.Panel>
