@@ -3,7 +3,13 @@ import logo from "../../assets/images/logo.png";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileMenuButton from "./mobile/MobileMenuButton";
 
-export default function NavBarContent({ navigation, classNames, user, open }) {
+export default function NavBarContent({
+  navigation,
+  classNames,
+  user,
+  open,
+  updateNavigation,
+}) {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="flex h-16 items-center justify-between">
@@ -16,18 +22,19 @@ export default function NavBarContent({ navigation, classNames, user, open }) {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
+                <Link
+                  to={item.href}
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
                     "px-3 py-2 rounded-md text-sm font-medium"
                   )}
+                  key={item.name}
+                  onClick={() => updateNavigation(item.href)}
                 >
-                  <Link to={item.href}>{item.name}</Link>
-                </a>
+                  {item.name}
+                </Link>
               ))}
             </div>
           </div>
