@@ -1,6 +1,7 @@
 import { Disclosure } from "@headlessui/react";
-import MobileMenuContent from "./mobile/MobileMenuContent";
+import { useState } from "react";
 import NavBarContent from "./NavBarContent";
+import MobileMenuContent from "./mobile/MobileMenuContent";
 
 const user = {
   name: "Tom Cook",
@@ -8,24 +9,40 @@ const user = {
   imageUrl:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+
+const baseNavigation = [
+  { name: "Home", href: "/", current: true },
+  { name: "Patients", href: "/patients", current: false },
 ];
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Reports", href: "#", current: false },
-];
+
+function buildInitialNavitation() {
+  const pathname = window.location.pathname;
+  return baseNavigation.map((item) => {
+    return {
+      ...item,
+      current: (item.current = item.href === pathname),
+    };
+  });
+}
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
+  const [navigation, setNavigation] = useState(buildInitialNavitation());
+
+  function updateNavigation(pathname) {
+    const navigationCopy = [...navigation];
+    const newNavigation = navigationCopy.map((item) => {
+      return {
+        ...item,
+        current: (item.current = item.href === pathname),
+      };
+    });
+    setNavigation(newNavigation);
+  }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -34,14 +51,13 @@ export default function NavBar() {
             navigation={navigation}
             classNames={classNames}
             user={user}
-            userNavigation={userNavigation}
             open={open}
+            updateNavigation={updateNavigation}
           />
           <MobileMenuContent
             navigation={navigation}
             classNames={classNames}
             user={user}
-            userNavigation={userNavigation}
           />
         </>
       )}
