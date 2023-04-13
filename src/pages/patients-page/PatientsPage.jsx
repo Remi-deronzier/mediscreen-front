@@ -1,39 +1,15 @@
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
-import { SET_PATIENTS } from "../../constants/actionTypes";
-import { useDispatchPatients, usePatients } from "../../context/patientContext";
+import { ApiContext } from "../../context/apiContext";
+import useFetchPatients from "../../hooks/useFetchPatients";
 import PatientCard from "./components/PatientCard";
 
 export default function PatientsPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const state = usePatients();
-  const dispatch = useDispatchPatients();
+  const BASE_URL_API = useContext(ApiContext);
 
-  useEffect(() => {
-    let shouldCancel = false;
-    async function fetchPatients() {
-      try {
-        const response = await fetch("http://localhost:8081/patients");
-        if (response.ok) {
-          const data = await response.json();
-          if (shouldCancel) return;
-          dispatch({ type: SET_PATIENTS, patients: data.content });
-        } else {
-          alert("Une erreur est survenue");
-        }
-      } catch (error) {
-        alert("Une erreur est survenue");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchPatients();
-    return () => {
-      shouldCancel = true;
-    };
-  }, []);
+  const { isLoading, patients } = useFetchPatients(`${BASE_URL_API}/patients`);
 
   let navigate = useNavigate();
   const routeChange = () => {
@@ -57,7 +33,7 @@ export default function PatientsPage() {
         role="list"
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4"
       >
-        {state.patients.map((patient) => (
+        {patients.map((patient) => (
           <PatientCard key={patient.id} patient={patient} />
         ))}
       </ul>

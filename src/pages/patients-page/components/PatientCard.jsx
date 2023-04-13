@@ -5,11 +5,12 @@ import {
   PhoneIcon,
   TrashIcon,
 } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import manAvatar from "../../../assets/images/avatar-man.png";
 import womanAvatar from "../../../assets/images/avatar-woman.png";
 import Loader from "../../../components/loader/Loader";
 import { DELETE_PATIENT } from "../../../constants/actionTypes";
+import { ApiContext } from "../../../context/apiContext";
 import { useDispatchPatients } from "../../../context/patientContext";
 
 const sexTypes = {
@@ -18,6 +19,8 @@ const sexTypes = {
 };
 
 export default function PatientCard({ patient }) {
+  const BASE_URL_API = useContext(ApiContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatchPatients();
 
@@ -32,7 +35,7 @@ export default function PatientCard({ patient }) {
   const handleDeletePatient = async (id) => {
     try {
       setIsLoading(true);
-      await fetch(`http://localhost:8081/patients/${id}`, {
+      await fetch(`${BASE_URL_API}/patients/${id}`, {
         method: "DELETE",
       });
       dispatch({ type: DELETE_PATIENT, id });

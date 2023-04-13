@@ -1,6 +1,10 @@
+import { useContext } from "react";
+import { ApiContext } from "../../context/apiContext";
 import PatientForm from "../layout/PatientForm";
 
 export default function AddPatientPage() {
+  const BASE_URL_API = useContext(ApiContext);
+
   const defaultValues = {
     firstName: "",
     lastName: "",
@@ -12,7 +16,7 @@ export default function AddPatientPage() {
 
   async function submit(payload) {
     try {
-      await fetch("http://localhost:8081/patients", {
+      await fetch(`${BASE_URL_API}/patients`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
