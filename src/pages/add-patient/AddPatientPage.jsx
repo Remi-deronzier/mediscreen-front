@@ -7,11 +7,7 @@ export default function AddPatientPage() {
     dateOfBirth: "",
     sex: "",
     phoneNumber: "",
-    country: "",
-    streetAddress: "",
-    city: "",
-    region: "",
-    postalCode: "",
+    address: "",
   };
 
   async function submit(payload) {

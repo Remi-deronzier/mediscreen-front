@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import country from "country-list-js";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -15,11 +14,14 @@ export default function PatientForm({ defaultValues, submit }) {
       .required("Date of birth is required"),
     sex: yup.string().required("Sex is required"),
     phoneNumber: yup.string().required("Phone number is required"),
-    country: yup.string().required("Country is required"),
-    streetAddress: yup.string().required("Street address is required"),
-    city: yup.string().required("City is required"),
-    region: yup.string().required("Region is required"),
-    postalCode: yup.string().required("Postal code is required"),
+    address: yup
+      .string()
+      .required("Street address is required")
+      .test(
+        "len",
+        "Can't be longer than 20 characters",
+        (val) => val.length <= 20
+      ),
   });
 
   let navigate = useNavigate();
@@ -46,16 +48,7 @@ export default function PatientForm({ defaultValues, submit }) {
       lastName: values.lastName,
       dateOfBirth: values.dateOfBirth,
       sex: values.sex,
-      address:
-        values.streetAddress +
-        ", " +
-        values.city +
-        ", " +
-        values.region +
-        ", " +
-        values.postalCode +
-        ", " +
-        values.country,
+      address: values.address,
       phoneNumber: values.phoneNumber,
     };
     try {
@@ -205,136 +198,30 @@ export default function PatientForm({ defaultValues, submit }) {
               )}
             </div>
 
-            <div className="sm:col-span-2">
+            <div className="col-span-full">
               <label
-                htmlFor="country"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Country
-              </label>
-              <div className="mt-2">
-                <select
-                  {...register("country")}
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                  {[""].concat(country.names()).map((countryName, index) =>
-                    index === 0 ? (
-                      <option key={index} disabled value="">
-                        Select an option
-                      </option>
-                    ) : (
-                      <option key={index} value={countryName}>
-                        {countryName}
-                      </option>
-                    )
-                  )}
-                </select>
-              </div>
-              {errors?.country && (
-                <p className="text-sm py-2 text-red-600">
-                  {errors.country.message}
-                </p>
-              )}
-            </div>
-
-            <div className="col-span-4">
-              <label
-                htmlFor="streetAddress"
+                htmlFor="address"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Street address
               </label>
               <div className="mt-2">
                 <input
-                  {...register("streetAddress")}
+                  {...register("address")}
                   type="text"
-                  name="streetAddress"
-                  id="streetAddress"
+                  name="address"
+                  id="address"
                   autoComplete="street-address"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              {errors?.streetAddress && (
+              {errors?.address && (
                 <p className="text-sm py-2 text-red-600">
-                  {errors.streetAddress.message}
+                  {errors.address.message}
                 </p>
               )}
             </div>
 
-            <div className="sm:col-span-2 sm:col-start-1">
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                City
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("city")}
-                  type="text"
-                  name="city"
-                  id="city"
-                  autoComplete="address-level2"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              {errors?.city && (
-                <p className="text-sm py-2 text-red-600">
-                  {errors.city.message}
-                </p>
-              )}
-            </div>
-
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="region"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                State / Province
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("region")}
-                  type="text"
-                  name="region"
-                  id="region"
-                  autoComplete="address-level1"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              {errors?.region && (
-                <p className="text-sm py-2 text-red-600">
-                  {errors.region.message}
-                </p>
-              )}
-            </div>
-
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="postalCode"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                ZIP / Postal code
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("postalCode")}
-                  type="text"
-                  name="postalCode"
-                  id="postalCode"
-                  autoComplete="postal-code"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-              {errors?.postalCode && (
-                <p className="text-sm py-2 text-red-600">
-                  {errors.postalCode.message}
-                </p>
-              )}
-            </div>
             {errors.globalError && (
               <div className="col-span-full">
                 <p className="text-sm text-right text-red-600">
