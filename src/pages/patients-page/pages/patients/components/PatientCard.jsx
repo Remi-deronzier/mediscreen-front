@@ -6,6 +6,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/20/solid";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import manAvatar from "../../../../../assets/images/avatar-man.png";
 import womanAvatar from "../../../../../assets/images/avatar-woman.png";
 import Loader from "../../../../../components/loader/Loader";
@@ -23,6 +24,12 @@ export default function PatientCard({ patient }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatchPatients();
+
+  let navigate = useNavigate();
+  const goToEditPage = (id) => {
+    let path = `/patients/edit/${id}`;
+    navigate(path);
+  };
 
   const buildFullName = (firstName, lastName) => {
     return `${firstName} ${lastName.toUpperCase()}`;
@@ -90,6 +97,10 @@ export default function PatientCard({ patient }) {
             <button
               className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900"
               disabled={isLoading}
+              onClick={(e) => {
+                e.stopPropagation();
+                goToEditPage(patient.id);
+              }}
             >
               <PencilSquareIcon
                 className="h-5 w-5 text-gray-400"

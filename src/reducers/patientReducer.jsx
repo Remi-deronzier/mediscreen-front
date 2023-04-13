@@ -1,6 +1,6 @@
 import { DELETE_PATIENT, SET_PATIENTS } from "../constants/actionTypes";
 
-export default function patientReducer(state = initialState, action) {
+export default function patientReducer(state, action) {
   switch (action.type) {
     case SET_PATIENTS:
       return {
