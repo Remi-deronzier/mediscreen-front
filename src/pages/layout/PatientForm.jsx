@@ -19,8 +19,8 @@ export default function PatientForm({ defaultValues, submit }) {
       .required("Street address is required")
       .test(
         "len",
-        "Can't be longer than 20 characters",
-        (val) => val.length <= 20
+        "Can't be longer than 25 characters",
+        (val) => val.length <= 25
       ),
   });
 
