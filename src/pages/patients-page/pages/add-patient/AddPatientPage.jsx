@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { ApiContext } from "../../context/apiContext";
-import PatientForm from "../layout/PatientForm";
+import { ApiContext } from "../../../../context/apiContext";
+import PatientForm from "../../../layout/PatientForm";
 
 export default function AddPatientPage() {
   const BASE_URL_API = useContext(ApiContext);

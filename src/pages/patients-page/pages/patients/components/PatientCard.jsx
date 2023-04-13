@@ -6,12 +6,12 @@ import {
   TrashIcon,
 } from "@heroicons/react/20/solid";
 import { useContext, useState } from "react";
-import manAvatar from "../../../assets/images/avatar-man.png";
-import womanAvatar from "../../../assets/images/avatar-woman.png";
-import Loader from "../../../components/loader/Loader";
-import { DELETE_PATIENT } from "../../../constants/actionTypes";
-import { ApiContext } from "../../../context/apiContext";
-import { useDispatchPatients } from "../../../context/patientContext";
+import manAvatar from "../../../../../assets/images/avatar-man.png";
+import womanAvatar from "../../../../../assets/images/avatar-woman.png";
+import Loader from "../../../../../components/loader/Loader";
+import { DELETE_PATIENT } from "../../../../../constants/actionTypes";
+import { ApiContext } from "../../../../../context/apiContext";
+import { useDispatchPatients } from "../../../../../context/patientContext";
 
 const sexTypes = {
   M: { label: "Homme", image: manAvatar },

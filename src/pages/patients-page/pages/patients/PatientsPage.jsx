@@ -1,9 +1,9 @@
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../components/loader/Loader";
-import { ApiContext } from "../../context/apiContext";
-import useFetchPatients from "../../hooks/useFetchPatients";
+import Loader from "../../../../components/loader/Loader";
+import { ApiContext } from "../../../../context/apiContext";
+import useFetchPatients from "../../../../hooks/useFetchPatients";
 import PatientCard from "./components/PatientCard";
 
 export default function PatientsPage() {
@@ -13,7 +13,7 @@ export default function PatientsPage() {
 
   let navigate = useNavigate();
   const routeChange = () => {
-    let path = "/add-patient";
+    let path = "/patients/add";
     navigate(path);
   };
 

@@ -1,9 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import AddPatientPage from "./pages/add-patient/AddPatientPage";
 import ErrorPage from "./pages/error-page/ErrorPage";
 import HomePage from "./pages/home-page/HomePage";
-import PatientsPage from "./pages/patients-page/PatientsPage";
+import PatientsLayout from "./pages/patients-page/PatientsLayout";
+import AddPatientPage from "./pages/patients-page/pages/add-patient/AddPatientPage";
+import EditPatientPage from "./pages/patients-page/pages/edit-patient/EditPatient";
+import PatientsPage from "./pages/patients-page/pages/patients/PatientsPage";
 
 export const router = createBrowserRouter([
   {
@@ -17,11 +19,17 @@ export const router = createBrowserRouter([
       },
       {
         path: "/patients",
-        element: <PatientsPage />,
-      },
-      {
-        path: "/add-patient",
-        element: <AddPatientPage />,
+        element: <PatientsLayout />,
+        children: [
+          {
+            index: true,
+            element: <PatientsPage />,
+          },
+          {
+            path: "add",
+            element: <AddPatientPage />,
+          },
+        ],
       },
     ],
   },
