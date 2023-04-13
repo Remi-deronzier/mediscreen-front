@@ -2,11 +2,14 @@ import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
+import { SET_PATIENTS } from "../../constants/actionTypes";
+import { useDispatchPatients, usePatients } from "../../context/patientContext";
 import PatientCard from "./components/PatientCard";
 
 export default function PatientsPage() {
-  const [patients, setPatients] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const state = usePatients();
+  const dispatch = useDispatchPatients();
 
   useEffect(() => {
     let shouldCancel = false;
@@ -16,7 +19,7 @@ export default function PatientsPage() {
         if (response.ok) {
           const data = await response.json();
           if (shouldCancel) return;
-          setPatients(data.content);
+          dispatch({ type: SET_PATIENTS, patients: data.content });
         } else {
           alert("Une erreur est survenue");
         }
@@ -31,10 +34,6 @@ export default function PatientsPage() {
       shouldCancel = true;
     };
   }, []);
-
-  const deletePatient = async (id) => {
-    setPatients(patients.filter((patient) => patient.id !== id));
-  };
 
   let navigate = useNavigate();
   const routeChange = () => {
@@ -58,12 +57,8 @@ export default function PatientsPage() {
         role="list"
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4"
       >
-        {patients.map((patient) => (
-          <PatientCard
-            key={patient.id}
-            patient={patient}
-            deletePatient={deletePatient}
-          />
+        {state.patients.map((patient) => (
+          <PatientCard key={patient.id} patient={patient} />
         ))}
       </ul>
     </div>

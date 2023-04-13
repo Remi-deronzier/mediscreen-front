@@ -9,14 +9,17 @@ import { useState } from "react";
 import manAvatar from "../../../assets/images/avatar-man.png";
 import womanAvatar from "../../../assets/images/avatar-woman.png";
 import Loader from "../../../components/loader/Loader";
+import { DELETE_PATIENT } from "../../../constants/actionTypes";
+import { useDispatchPatients } from "../../../context/patientContext";
 
 const sexTypes = {
   M: { label: "Homme", image: manAvatar },
   F: { label: "Femme", image: womanAvatar },
 };
 
-export default function PatientCard({ patient, deletePatient }) {
+export default function PatientCard({ patient }) {
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatchPatients();
 
   const buildFullName = (firstName, lastName) => {
     return `${firstName} ${lastName.toUpperCase()}`;
@@ -32,9 +35,8 @@ export default function PatientCard({ patient, deletePatient }) {
       await fetch(`http://localhost:8081/patients/${id}`, {
         method: "DELETE",
       });
-      deletePatient(id);
+      dispatch({ type: DELETE_PATIENT, id });
     } catch (error) {
-      console.log(error);
       alert("Une erreur est survenue");
     } finally {
       setIsLoading(false);
