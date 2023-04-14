@@ -13,6 +13,7 @@ import Loader from "../../../../../components/loader/Loader";
 import { DELETE_PATIENT } from "../../../../../constants/actionTypes";
 import { ApiContext } from "../../../../../context/apiContext";
 import { useDispatchPatients } from "../../../../../context/patientContext";
+import buildFullName from "../../../../../utils/helpers";
 
 const sexTypes = {
   M: { label: "Homme", image: manAvatar },
@@ -31,8 +32,9 @@ export default function PatientCard({ patient }) {
     navigate(path);
   };
 
-  const buildFullName = (firstName, lastName) => {
-    return `${firstName} ${lastName.toUpperCase()}`;
+  const goToDetailsPage = (id) => {
+    let path = `/patients/${id}`;
+    navigate(path);
   };
 
   const buildSex = (sex) => {
@@ -58,7 +60,10 @@ export default function PatientCard({ patient }) {
       key={patient.id}
       className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
     >
-      <div className="flex w-full justify-between space-x-8 p-5">
+      <div
+        className="flex w-full justify-between space-x-8 p-5 hover:cursor-pointer"
+        onClick={() => goToDetailsPage(patient.id)}
+      >
         <div className="flex-1 truncate">
           <div className="flex items-center space-x-3 pb-2">
             <h3 className="truncate text-sm font-medium text-gray-900">

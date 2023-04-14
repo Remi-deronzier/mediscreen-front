@@ -6,7 +6,7 @@ export default function PatientFeature() {
   return (
     <div className="flex flex-col min-h-screen justify-between bg-slate-100">
       <NavBar />
-      <main className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8 md:flex">
+      <main className="mx-auto max-w-6xl py-6 px-4 sm:px-6 lg:px-8 md:flex">
         <Outlet />
       </main>
       <Footer />

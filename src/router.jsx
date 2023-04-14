@@ -4,6 +4,7 @@ import ErrorPage from "./pages/error-page/ErrorPage";
 import HomePage from "./pages/home-page/HomePage";
 import PatientsLayout from "./pages/patients-page/PatientsLayout";
 import AddPatientPage from "./pages/patients-page/pages/add-patient/AddPatientPage";
+import DetailsPatient from "./pages/patients-page/pages/details-patient/DetailsPatient";
 import EditPatientPage from "./pages/patients-page/pages/edit-patient/EditPatient";
 import PatientsPage from "./pages/patients-page/pages/patients/PatientsPage";
 
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
           {
             path: "edit/:id",
             element: <EditPatientPage />,
+          },
+          {
+            path: ":id",
+            element: <DetailsPatient />,
           },
         ],
       },
