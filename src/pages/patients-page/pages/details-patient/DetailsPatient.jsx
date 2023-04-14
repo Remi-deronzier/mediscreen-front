@@ -1,17 +1,22 @@
 import { PaperClipIcon } from "@heroicons/react/20/solid";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { usePatients } from "../../../../context/patientContext";
+import Loader from "../../../../components/loader/Loader";
+import { ApiContext } from "../../../../context/apiContext";
+import useFetchPatient from "../../../../hooks/useFetchPatient";
 import buildFullName from "../../../../utils/helpers";
 import NoteArea from "./components/NoteArea";
 
 export default function DetailsPatient() {
-  const state = usePatients();
+  const BASE_URL_API = useContext(ApiContext);
   const { id } = useParams();
-  const patient = state.patients.find(
-    (patient) => patient.id.toString() === id
+  const { isLoading, patient } = useFetchPatient(
+    `${BASE_URL_API}/patients/${id}`
   );
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className="overflow-hidden bg-white shadow sm:rounded-lg xl:w-screen">
       <div className="px-4 py-6 sm:px-6">
         <h3 className="text-base font-semibold leading-7 text-gray-900">
@@ -26,7 +31,7 @@ export default function DetailsPatient() {
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-900">Full name</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {buildFullName(patient.firstName, patient.lastName)}
+              {buildFullName(patient?.firstName, patient?.lastName)}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

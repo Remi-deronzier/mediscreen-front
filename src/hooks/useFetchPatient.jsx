@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 export default function useFetchPatient(url) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [patient, setPatient] = useState({});
+  const [patient, setPatient] = useState({
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    address: "",
+    phoneNumber: "",
+    sex: "",
+  });
 
   useEffect(() => {
     let shouldCancel = false;
