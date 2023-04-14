@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
+import Loader from "../../../../components/loader/Loader";
 import { ApiContext } from "../../../../context/apiContext";
-import { usePatients } from "../../../../context/patientContext";
+import useFetchPatient from "../../../../hooks/useFetchPatient";
 import PatientForm from "../../../layout/PatientForm";
 
 export default function EditPatientPage() {
   const BASE_URL_API = useContext(ApiContext);
-  const state = usePatients();
   const { id } = useParams();
-  const patient = state.patients.find(
-    (patient) => patient.id.toString() === id
+  const { isLoading, patient } = useFetchPatient(
+    `${BASE_URL_API}/patients/${id}`
   );
 
   const defaultValues = {
@@ -35,5 +35,9 @@ export default function EditPatientPage() {
     }
   }
 
-  return <PatientForm defaultValues={defaultValues} submit={submit} />;
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <PatientForm defaultValues={defaultValues} submit={submit} />
+  );
 }

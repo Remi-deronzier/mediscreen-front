@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -23,6 +24,10 @@ export default function PatientForm({ defaultValues, submit }) {
         (val) => val.length <= 25
       ),
   });
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
 
   let navigate = useNavigate();
   const routeChange = () => {
