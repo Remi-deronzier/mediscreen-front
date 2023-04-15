@@ -1,15 +1,15 @@
-import { BASE_URL_PATIENTS_SERVICE } from "../constants/api";
+import { BASE_URL_PATIENTS_SERVICE, PATIENTS_RESOURCE } from "../constants/api";
 
 const getAll = () => {
-  return fetch(`${BASE_URL_PATIENTS_SERVICE}/patients`);
+  return fetch(`${BASE_URL_PATIENTS_SERVICE}/${PATIENTS_RESOURCE}`);
 };
 
 const get = (id) => {
-  return fetch(`${BASE_URL_PATIENTS_SERVICE}/patients/${id}`);
+  return fetch(`${BASE_URL_PATIENTS_SERVICE}/${PATIENTS_RESOURCE}/${id}`);
 };
 
 const create = (data) => {
-  return fetch(`${BASE_URL_PATIENTS_SERVICE}/patients`, {
+  return fetch(`${BASE_URL_PATIENTS_SERVICE}/${PATIENTS_RESOURCE}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +19,7 @@ const create = (data) => {
 };
 
 const update = (id, data) => {
-  return fetch(`${BASE_URL_PATIENTS_SERVICE}/patients/${id}`, {
+  return fetch(`${BASE_URL_PATIENTS_SERVICE}/${PATIENTS_RESOURCE}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +29,7 @@ const update = (id, data) => {
 };
 
 const remove = (id) => {
-  return fetch(`${BASE_URL_PATIENTS_SERVICE}/patients/${id}`, {
+  return fetch(`${BASE_URL_PATIENTS_SERVICE}/${PATIENTS_RESOURCE}/${id}`, {
     method: "DELETE",
   });
 };

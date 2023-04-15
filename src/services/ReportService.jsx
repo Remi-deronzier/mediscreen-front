@@ -1,8 +1,8 @@
-import { BASE_URL_REPORTS_SERVICE } from "../constants/api";
+import { BASE_URL_REPORTS_SERVICE, REPORTS_RESOURCE } from "../constants/api";
 
 const downloadPdf = (patientId) => {
   return fetch(
-    `${BASE_URL_REPORTS_SERVICE}/reports/pdf?patientId=${patientId}`
+    `${BASE_URL_REPORTS_SERVICE}/${REPORTS_RESOURCE}/pdf?patientId=${patientId}`
   );
 };
 
