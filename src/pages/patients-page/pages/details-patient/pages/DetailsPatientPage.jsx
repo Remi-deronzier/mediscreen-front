@@ -1,13 +1,13 @@
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
-import Loader from "../../../../components/loader/Loader";
-import { ApiContext } from "../../../../context/apiContext";
-import useFetchPatient from "../../../../hooks/useFetchPatient";
-import buildFullName from "../../../../utils/helpers";
-import NoteArea from "./components/NoteArea";
+import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../../../../../components/loader/Loader";
+import { ApiContext } from "../../../../../context/apiContext";
+import useFetchPatient from "../../../../../hooks/useFetchPatient";
+import buildFullName from "../../../../../utils/helpers";
+import NoteArea from "../components/NoteArea";
 
-export default function DetailsPatient() {
+export default function DetailsPatientPage() {
   const { BASE_URL_PATIENTS_SERVICE, BASE_URL_REPORTS_SERVICE } =
     useContext(ApiContext);
   const { id } = useParams();
@@ -26,6 +26,12 @@ export default function DetailsPatient() {
       patient.lastName
     ).toLowerCase()}_${new Date().toLocaleDateString()}.pdf`;
   }
+
+  let navigate = useNavigate();
+  const goToNotesPatientPage = (id) => {
+    let path = `/patients/${id}/notes`;
+    navigate(path);
+  };
 
   const downloadPdf = async () => {
     const response = await fetch(
@@ -80,7 +86,13 @@ export default function DetailsPatient() {
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-900">Note</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <dd className="flex items-start mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <button
+                onClick={() => goToNotesPatientPage(patient.id)}
+                className="rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100 mr-8"
+              >
+                See all notes
+              </button>
               <NoteArea patientId={patient.id} />
             </dd>
           </div>

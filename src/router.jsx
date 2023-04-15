@@ -4,7 +4,9 @@ import ErrorPage from "./pages/error-page/ErrorPage";
 import HomePage from "./pages/home-page/HomePage";
 import PatientsLayout from "./pages/patients-page/PatientsLayout";
 import AddPatientPage from "./pages/patients-page/pages/add-patient/AddPatientPage";
-import DetailsPatient from "./pages/patients-page/pages/details-patient/DetailsPatient";
+import DetailsPatientLayout from "./pages/patients-page/pages/details-patient/DetailsPatientLayout";
+import DetailsPatientPage from "./pages/patients-page/pages/details-patient/pages/DetailsPatientPage";
+import NotesPatientPage from "./pages/patients-page/pages/details-patient/pages/NotesPatientPage";
 import EditPatientPage from "./pages/patients-page/pages/edit-patient/EditPatient";
 import PatientsPage from "./pages/patients-page/pages/patients/PatientsPage";
 
@@ -36,7 +38,17 @@ export const router = createBrowserRouter([
           },
           {
             path: ":id",
-            element: <DetailsPatient />,
+            element: <DetailsPatientLayout />,
+            children: [
+              {
+                index: true,
+                element: <DetailsPatientPage />,
+              },
+              {
+                path: "notes",
+                element: <NotesPatientPage />,
+              },
+            ],
           },
         ],
       },
