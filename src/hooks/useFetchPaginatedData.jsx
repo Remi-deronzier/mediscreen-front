@@ -1,27 +1,19 @@
 import { useEffect, useState } from "react";
-import PatientService from "../services/PatientService";
+import { SET_DATA } from "../constants/actionTypes";
 
-export default function useFetchPatient(id) {
+export default function useFetchPaginatedData(dispatch, state, request) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [patient, setPatient] = useState({
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    address: "",
-    phoneNumber: "",
-    sex: "",
-  });
 
   useEffect(() => {
     let shouldCancel = false;
-    async function fetchPatient() {
+    async function fetchData() {
       try {
-        const response = await PatientService.get(id);
+        const response = await request();
         if (response.ok) {
           const data = await response.json();
           if (shouldCancel) return;
-          setPatient(data);
+          dispatch({ type: SET_DATA, data: data.content });
         } else {
           alert("Une erreur est survenue");
         }
@@ -32,11 +24,11 @@ export default function useFetchPatient(id) {
         setIsLoading(false);
       }
     }
-    fetchPatient();
+    fetchData();
     return () => {
       shouldCancel = true;
     };
   }, []);
 
-  return { isLoading, patient, error };
+  return { isLoading, data: state.data, error };
 }

@@ -3,16 +3,28 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "../../../../../components/buttons/LoadingButton";
 import Loader from "../../../../../components/loader/Loader";
-import useFetchPatient from "../../../../../hooks/useFetchPatient";
+import useFetchData from "../../../../../hooks/useFetchData";
 import ErrorPage from "../../../../../pages/error-page/ErrorPage";
 import PathService from "../../../../../services/PathService";
+import PatientService from "../../../../../services/PatientService";
 import ReportService from "../../../../../services/ReportService";
 import buildFullName from "../../../../../utils/helpers";
 import AddNote from "../components/AddNote";
 
 export default function DetailsPatientPage() {
   const { id } = useParams();
-  const { isLoading, patient, error } = useFetchPatient(id);
+  const {
+    isLoading,
+    data: patient,
+    error,
+  } = useFetchData(id, PatientService, {
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    address: "",
+    phoneNumber: "",
+    sex: "",
+  });
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
   if (error) return <ErrorPage />;

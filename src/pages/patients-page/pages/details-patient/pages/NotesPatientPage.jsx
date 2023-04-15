@@ -2,9 +2,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../../../components/loader/Loader";
 import { useDispatchNotes, useNotes } from "../../../../../context/noteContext";
 import useFetchData from "../../../../../hooks/useFetchData";
-import useFetchPatient from "../../../../../hooks/useFetchPatient";
+import useFetchPaginatedData from "../../../../../hooks/useFetchPaginatedData";
 import NoteService from "../../../../../services/NoteService";
 import PathService from "../../../../../services/PathService";
+import PatientService from "../../../../../services/PatientService";
 import buildFullName, {
   getRandomDoctorName,
 } from "../../../../../utils/helpers";
@@ -18,9 +19,16 @@ export default function NotesPatientPage() {
 
   const {
     isLoadingPatients,
-    patient,
+    data: patient,
     error: errorPatient,
-  } = useFetchPatient(id);
+  } = useFetchData(id, PatientService, {
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    address: "",
+    phoneNumber: "",
+    sex: "",
+  });
 
   if (errorPatient) return <ErrorPage />;
 
@@ -33,7 +41,9 @@ export default function NotesPatientPage() {
     isLoading: isLoadingNotes,
     data,
     error: errorNotes,
-  } = useFetchData(dispatch, state, () => NoteService.findByPatientId(id));
+  } = useFetchPaginatedData(dispatch, state, () =>
+    NoteService.findByPatientId(id)
+  );
 
   if (errorNotes) return <ErrorPage />;
 

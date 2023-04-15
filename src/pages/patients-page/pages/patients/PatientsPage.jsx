@@ -5,7 +5,7 @@ import {
   useDispatchPatients,
   usePatients,
 } from "../../../../context/patientContext";
-import useFetchData from "../../../../hooks/useFetchData";
+import useFetchPaginatedData from "../../../../hooks/useFetchPaginatedData";
 import PathService from "../../../../services/PathService";
 import PatientService from "../../../../services/PatientService";
 import ErrorPage from "../../../error-page/ErrorPage";
@@ -19,7 +19,7 @@ export default function PatientsPage() {
     isLoading,
     data: patients,
     error,
-  } = useFetchData(dispatch, state, PatientService.getAll);
+  } = useFetchPaginatedData(dispatch, state, PatientService.getAll);
 
   let navigate = useNavigate();
   const goToAddPatientPage = () => {

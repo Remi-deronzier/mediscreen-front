@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { SET_DATA } from "../constants/actionTypes";
 
-export default function useFetchData(dispatch, state, request) {
+export default function useFetchData(id, service, defaultData) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [data, setData] = useState(defaultData);
 
   useEffect(() => {
     let shouldCancel = false;
     async function fetchData() {
       try {
-        const response = await request();
+        const response = await service.get(id);
         if (response.ok) {
           const data = await response.json();
           if (shouldCancel) return;
-          dispatch({ type: SET_DATA, data: data.content });
+          setData(data);
         } else {
           alert("Une erreur est survenue");
         }
@@ -30,5 +30,5 @@ export default function useFetchData(dispatch, state, request) {
     };
   }, []);
 
-  return { isLoading, data: state.data, error };
+  return { isLoading, data, error };
 }
