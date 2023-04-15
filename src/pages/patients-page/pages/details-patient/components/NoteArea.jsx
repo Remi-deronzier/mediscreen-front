@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import LoadingButton from "../../../../../components/buttons/LoadingButton";
@@ -8,6 +8,12 @@ import NoteService from "../../../../../services/NoteService";
 
 export default function NoteArea({ patientId }) {
   const user = useContext(UserContext);
+
+  const textAreaRef = useRef(null);
+
+  useEffect(() => {
+    textAreaRef.current.focus();
+  }, []);
 
   const yupSchema = yup.object({
     note: yup
@@ -29,6 +35,8 @@ export default function NoteArea({ patientId }) {
     defaultValue: defaultValues,
     resolver: yupResolver(yupSchema),
   });
+
+  const { ref, ...rest } = register("note");
 
   async function submitForm(values) {
     const payload = {
@@ -53,7 +61,7 @@ export default function NoteArea({ patientId }) {
         <img
           className="inline-block h-10 w-10 rounded-full"
           src={user.imageUrl}
-          alt=""
+          alt="Doctor avatar"
         />
       </div>
       <div className="min-w-0 flex-1">
@@ -63,7 +71,11 @@ export default function NoteArea({ patientId }) {
               Add your note
             </label>
             <textarea
-              {...register("note")}
+              {...rest}
+              ref={(e) => {
+                ref(e);
+                textAreaRef.current = e;
+              }}
               rows={3}
               name="note"
               id="note"

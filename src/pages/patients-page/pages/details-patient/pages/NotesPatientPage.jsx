@@ -1,9 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../../../components/loader/Loader";
 import { useDispatchNotes, useNotes } from "../../../../../context/noteContext";
 import useFetchData from "../../../../../hooks/useFetchData";
 import useFetchPatient from "../../../../../hooks/useFetchPatient";
 import NoteService from "../../../../../services/NoteService";
+import PathService from "../../../../../services/PathService";
 import buildFullName, {
   getRandomDoctorName,
 } from "../../../../../utils/helpers";
@@ -22,6 +23,11 @@ export default function NotesPatientPage() {
   } = useFetchPatient(id);
 
   if (errorPatient) return <ErrorPage />;
+
+  let navigate = useNavigate();
+  const goToDetailsPage = (id) => {
+    navigate(PathService.detailsPatientPagePath.programaticPath(id));
+  };
 
   const {
     isLoading: isLoadingNotes,
@@ -57,6 +63,7 @@ export default function NotesPatientPage() {
           <button
             type="button"
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => goToDetailsPage(id)}
           >
             Add note
           </button>
