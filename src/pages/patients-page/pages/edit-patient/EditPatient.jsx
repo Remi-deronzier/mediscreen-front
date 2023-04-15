@@ -6,7 +6,8 @@ import useFetchPatient from "../../../../hooks/useFetchPatient";
 import PatientForm from "../../../layout/PatientForm";
 
 export default function EditPatientPage() {
-  const BASE_URL_API = useContext(ApiContext);
+  const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
+
   const { id } = useParams();
   const { isLoading, patient } = useFetchPatient(
     `${BASE_URL_API}/patients/${id}`

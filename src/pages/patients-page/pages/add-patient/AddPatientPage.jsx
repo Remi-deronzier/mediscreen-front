@@ -3,7 +3,7 @@ import { ApiContext } from "../../../../context/apiContext";
 import PatientForm from "../../../layout/PatientForm";
 
 export default function AddPatientPage() {
-  const BASE_URL_API = useContext(ApiContext);
+  const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
 
   const defaultValues = {
     firstName: "",

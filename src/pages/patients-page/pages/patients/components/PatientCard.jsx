@@ -21,7 +21,7 @@ const sexTypes = {
 };
 
 export default function PatientCard({ patient }) {
-  const BASE_URL_API = useContext(ApiContext);
+  const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatchPatients();

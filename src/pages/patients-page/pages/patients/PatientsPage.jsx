@@ -7,7 +7,7 @@ import useFetchPatients from "../../../../hooks/useFetchPatients";
 import PatientCard from "./components/PatientCard";
 
 export default function PatientsPage() {
-  const BASE_URL_API = useContext(ApiContext);
+  const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
 
   const { isLoading, patients } = useFetchPatients(`${BASE_URL_API}/patients`);
 

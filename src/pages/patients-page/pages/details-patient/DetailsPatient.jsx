@@ -8,11 +8,37 @@ import buildFullName from "../../../../utils/helpers";
 import NoteArea from "./components/NoteArea";
 
 export default function DetailsPatient() {
-  const BASE_URL_API = useContext(ApiContext);
+  const { BASE_URL_PATIENTS_SERVICE, BASE_URL_REPORTS_SERVICE } =
+    useContext(ApiContext);
   const { id } = useParams();
   const { isLoading, patient } = useFetchPatient(
-    `${BASE_URL_API}/patients/${id}`
+    `${BASE_URL_PATIENTS_SERVICE}/patients/${id}`
   );
+
+  function toAsciiString(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function buildPdfName(patient) {
+    return `report_${toAsciiString(
+      patient.firstName
+    ).toLowerCase()}_${toAsciiString(
+      patient.lastName
+    ).toLowerCase()}_${new Date().toLocaleDateString()}.pdf`;
+  }
+
+  const downloadPdf = async () => {
+    const response = await fetch(
+      `${BASE_URL_REPORTS_SERVICE}/reports/pdf?patientId=${id}`
+    );
+    const base64Data = await response.text();
+    const link = document.createElement("a");
+    link.href = `data:application/pdf;base64,${base64Data}`;
+    link.download = buildPdfName(patient);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return isLoading ? (
     <Loader />
@@ -79,12 +105,12 @@ export default function DetailsPatient() {
                     </div>
                   </div>
                   <div className="ml-4 flex-shrink-0">
-                    <a
-                      href="#"
+                    <button
+                      onClick={downloadPdf}
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       Download
-                    </a>
+                    </button>
                   </div>
                 </li>
               </ul>
