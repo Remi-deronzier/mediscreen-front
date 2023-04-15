@@ -31,7 +31,7 @@ export default function PatientForm({ defaultValues, submit }) {
   }, [defaultValues]);
 
   let navigate = useNavigate();
-  const routeChange = () => {
+  const goToPatientsPage = () => {
     let path = "/patients";
     navigate(path);
   };
@@ -62,7 +62,7 @@ export default function PatientForm({ defaultValues, submit }) {
       clearErrors();
       await submit(payload);
       reset(defaultValues);
-      routeChange();
+      goToPatientsPage();
     } catch (error) {
       const message = error?.message.split(": ")[1];
       setError("globalError", {
@@ -246,7 +246,7 @@ export default function PatientForm({ defaultValues, submit }) {
         <button
           type="button"
           className="text-sm font-semibold leading-6 text-gray-900"
-          onClick={routeChange}
+          onClick={goToPatientsPage}
         >
           Cancel
         </button>
