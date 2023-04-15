@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import ErrorPage from "./pages/error-page/ErrorPage";
 import HomePage from "./pages/home-page/HomePage";
-import PatientsLayout from "./pages/patients-page/PatientsLayout";
+import PatientsPageLayout from "./pages/patients-page/PatientsPageLayout";
 import AddPatientPage from "./pages/patients-page/pages/add-patient/AddPatientPage";
 import DetailsPatientLayout from "./pages/patients-page/pages/details-patient/DetailsPatientLayout";
 import DetailsPatientPage from "./pages/patients-page/pages/details-patient/pages/DetailsPatientPage";
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/patients",
-        element: <PatientsLayout />,
+        element: <PatientsPageLayout />,
         children: [
           {
             index: true,
