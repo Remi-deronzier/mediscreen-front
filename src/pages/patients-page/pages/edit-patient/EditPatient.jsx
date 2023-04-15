@@ -1,17 +1,11 @@
-import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../../../../components/loader/Loader";
-import { ApiContext } from "../../../../context/apiContext";
 import useFetchPatient from "../../../../hooks/useFetchPatient";
 import PatientForm from "../../../layout/PatientForm";
 
 export default function EditPatientPage() {
-  const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
-
   const { id } = useParams();
-  const { isLoading, patient } = useFetchPatient(
-    `${BASE_URL_API}/patients/${id}`
-  );
+  const { isLoading, patient } = useFetchPatient(id);
 
   const defaultValues = {
     firstName: patient.firstName,

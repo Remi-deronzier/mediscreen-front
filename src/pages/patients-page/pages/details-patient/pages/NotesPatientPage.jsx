@@ -10,15 +10,12 @@ import buildFullName, {
 } from "../../../../../utils/helpers";
 
 export default function NotesPatientPage() {
-  const { BASE_URL_PATIENTS_SERVICE, BASE_URL_NOTES_SERVICE } =
-    useContext(ApiContext);
+  const { BASE_URL_NOTES_SERVICE } = useContext(ApiContext);
   const { id } = useParams();
   const state = useNotes();
   const dispatch = useDispatchNotes();
 
-  const { isLoadingPatients, patient } = useFetchPatient(
-    `${BASE_URL_PATIENTS_SERVICE}/patients/${id}`
-  );
+  const { isLoadingPatients, patient } = useFetchPatient(id);
   const { isLoading: isLoadingNotes, data } = useFetchData(
     `${BASE_URL_NOTES_SERVICE}/notes/patient/${id}`,
     dispatch,

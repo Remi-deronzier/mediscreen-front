@@ -8,12 +8,9 @@ import buildFullName from "../../../../../utils/helpers";
 import NoteArea from "../components/NoteArea";
 
 export default function DetailsPatientPage() {
-  const { BASE_URL_PATIENTS_SERVICE, BASE_URL_REPORTS_SERVICE } =
-    useContext(ApiContext);
+  const { BASE_URL_REPORTS_SERVICE } = useContext(ApiContext);
   const { id } = useParams();
-  const { isLoading, patient } = useFetchPatient(
-    `${BASE_URL_PATIENTS_SERVICE}/patients/${id}`
-  );
+  const { isLoading, patient } = useFetchPatient(id);
 
   function toAsciiString(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
