@@ -6,7 +6,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../../../../components/loader/Loader";
+import LoadingButton from "../../../../../components/buttons/LoadingButton";
 import { useDispatchPatients } from "../../../../../context/patientContext";
 import useDeleteData from "../../../../../hooks/useDeleteData";
 import PathService from "../../../../../services/PathService";
@@ -70,43 +70,31 @@ export default function PatientCard({ patient }) {
       </div>
       <div>
         <div className="-mt-px flex divide-x divide-gray-200">
-          {isLoading ? (
-            <div className="flex-auto p-2">
-              <Loader />
-            </div>
-          ) : (
-            <button
-              className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900"
-              disabled={isLoading}
-              onClick={(e) => {
-                e.stopPropagation();
-                goToEditPage(patient.id);
-              }}
-            >
-              <PencilSquareIcon
-                className="h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
-              Edit
-            </button>
-          )}
-          {isLoading ? (
-            <div className="flex-auto p-2">
-              <Loader />
-            </div>
-          ) : (
-            <button
-              className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900"
-              disabled={isLoading}
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteData(patient.id);
-              }}
-            >
-              <TrashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-              Delete
-            </button>
-          )}
+          <LoadingButton
+            className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900"
+            isLoading={isLoading}
+            label="Edit"
+            onClick={(e) => {
+              e.stopPropagation();
+              goToEditPage(patient.id);
+            }}
+          >
+            <PencilSquareIcon
+              className="h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </LoadingButton>
+          <LoadingButton
+            className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900"
+            isLoading={isLoading}
+            label="Delete"
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteData(patient.id);
+            }}
+          >
+            <TrashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          </LoadingButton>
         </div>
       </div>
     </li>

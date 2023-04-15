@@ -1,5 +1,7 @@
 import { PaperClipIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import LoadingButton from "../../../../../components/buttons/LoadingButton";
 import Loader from "../../../../../components/loader/Loader";
 import useFetchPatient from "../../../../../hooks/useFetchPatient";
 import ErrorPage from "../../../../../pages/error-page/ErrorPage";
@@ -11,6 +13,7 @@ import NoteArea from "../components/NoteArea";
 export default function DetailsPatientPage() {
   const { id } = useParams();
   const { isLoading, patient, error } = useFetchPatient(id);
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
   if (error) return <ErrorPage />;
 
@@ -32,6 +35,7 @@ export default function DetailsPatientPage() {
   };
 
   const downloadPdf = async () => {
+    setIsDownloadingPdf(true);
     const response = await ReportService.downloadPdf(id);
     const base64Data = await response.text();
     const link = document.createElement("a");
@@ -40,6 +44,7 @@ export default function DetailsPatientPage() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setIsDownloadingPdf(false);
   };
 
   return isLoading ? (
@@ -113,12 +118,12 @@ export default function DetailsPatientPage() {
                     </div>
                   </div>
                   <div className="ml-4 flex-shrink-0">
-                    <button
+                    <LoadingButton
+                      isLoading={isDownloadingPdf}
+                      label="Download"
                       onClick={downloadPdf}
                       className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Download
-                    </button>
+                    />
                   </div>
                 </li>
               </ul>

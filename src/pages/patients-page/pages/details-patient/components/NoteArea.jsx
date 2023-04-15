@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import LoadingButton from "../../../../../components/buttons/LoadingButton";
 import { UserContext } from "../../../../../context/userContext";
 import NoteService from "../../../../../services/NoteService";
 
@@ -85,13 +86,12 @@ export default function NoteArea({ patientId }) {
               <div className="flex items-center"></div>
             </div>
             <div className="flex-shrink-0">
-              <button
+              <LoadingButton
+                isLoading={isSubmitting}
+                label="Add"
                 type="submit"
-                disabled={isSubmitting}
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Add
-              </button>
+              />
             </div>
           </div>
         </form>
