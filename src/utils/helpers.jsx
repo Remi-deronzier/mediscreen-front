@@ -1,3 +1,6 @@
+import manAvatar from "../assets/images/avatar-man.png";
+import womanAvatar from "../assets/images/avatar-woman.png";
+
 export default function buildFullName(firstName, lastName) {
   return `${firstName} ${lastName.toUpperCase()}`;
 }
@@ -27,3 +30,16 @@ export function formatDate(date) {
   const dateString = `${year}-${month}-${day}`;
   return dateString;
 }
+
+const sexTypes = {
+  M: { label: "Homme", image: manAvatar },
+  F: { label: "Femme", image: womanAvatar },
+};
+
+export const buildSexLabel = (sex) => {
+  return sexTypes[sex].label;
+};
+
+export const buildSexAvatar = (sex) => {
+  return sexTypes[sex].image;
+};

@@ -5,24 +5,19 @@ import {
   PhoneIcon,
   TrashIcon,
 } from "@heroicons/react/20/solid";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import manAvatar from "../../../../../assets/images/avatar-man.png";
-import womanAvatar from "../../../../../assets/images/avatar-woman.png";
 import Loader from "../../../../../components/loader/Loader";
-import { DELETE_DATA } from "../../../../../constants/actionTypes";
 import { useDispatchPatients } from "../../../../../context/patientContext";
+import useDeleteData from "../../../../../hooks/useDeleteData";
 import PatientService from "../../../../../services/PatientService";
-import buildFullName from "../../../../../utils/helpers";
-
-const sexTypes = {
-  M: { label: "Homme", image: manAvatar },
-  F: { label: "Femme", image: womanAvatar },
-};
+import buildFullName, {
+  buildSexAvatar,
+  buildSexLabel,
+} from "../../../../../utils/helpers";
 
 export default function PatientCard({ patient }) {
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatchPatients();
+  const { isLoading, deleteData } = useDeleteData(dispatch, PatientService);
 
   let navigate = useNavigate();
   const goToEditPage = (id) => {
@@ -33,22 +28,6 @@ export default function PatientCard({ patient }) {
   const goToDetailsPage = (id) => {
     let path = `/patients/${id}`;
     navigate(path);
-  };
-
-  const buildSex = (sex) => {
-    return sexTypes[sex].label;
-  };
-
-  const handleDeletePatient = async (id) => {
-    try {
-      setIsLoading(true);
-      await PatientService.remove(id);
-      dispatch({ type: DELETE_DATA, id });
-    } catch (error) {
-      alert("Une erreur est survenue");
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -66,7 +45,7 @@ export default function PatientCard({ patient }) {
               {buildFullName(patient.firstName, patient.lastName)}
             </h3>
             <span className="inline-block flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
-              {buildSex(patient.sex)}
+              {buildSexLabel(patient.sex)}
             </span>
           </div>
           <div className="flex items-center gap-x-2 text-gray-500">
@@ -86,7 +65,7 @@ export default function PatientCard({ patient }) {
         </div>
         <img
           className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-          src={sexTypes[patient.sex].image}
+          src={buildSexAvatar(patient.sex)}
           alt=""
         />
       </div>
@@ -122,7 +101,7 @@ export default function PatientCard({ patient }) {
               disabled={isLoading}
               onClick={(e) => {
                 e.stopPropagation();
-                handleDeletePatient(patient.id);
+                deleteData(patient.id);
               }}
             >
               <TrashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
