@@ -5,14 +5,14 @@ import {
   PhoneIcon,
   TrashIcon,
 } from "@heroicons/react/20/solid";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import manAvatar from "../../../../../assets/images/avatar-man.png";
 import womanAvatar from "../../../../../assets/images/avatar-woman.png";
 import Loader from "../../../../../components/loader/Loader";
 import { DELETE_DATA } from "../../../../../constants/actionTypes";
-import { ApiContext } from "../../../../../context/apiContext";
 import { useDispatchPatients } from "../../../../../context/patientContext";
+import PatientService from "../../../../../services/PatientService";
 import buildFullName from "../../../../../utils/helpers";
 
 const sexTypes = {
@@ -21,8 +21,6 @@ const sexTypes = {
 };
 
 export default function PatientCard({ patient }) {
-  const { BASE_URL_PATIENTS_SERVICE } = useContext(ApiContext);
-
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatchPatients();
 
@@ -44,9 +42,7 @@ export default function PatientCard({ patient }) {
   const handleDeletePatient = async (id) => {
     try {
       setIsLoading(true);
-      await fetch(`${BASE_URL_PATIENTS_SERVICE}/patients/${id}`, {
-        method: "DELETE",
-      });
+      await PatientService.remove(id);
       dispatch({ type: DELETE_DATA, id });
     } catch (error) {
       alert("Une erreur est survenue");

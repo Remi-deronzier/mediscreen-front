@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BASE_URL_PATIENTS_SERVICE } from "../constants/api";
+import PatientService from "../services/PatientService";
 
 export default function useFetchPatient(id) {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,9 +17,7 @@ export default function useFetchPatient(id) {
     let shouldCancel = false;
     async function fetchPatient() {
       try {
-        const response = await fetch(
-          `${BASE_URL_PATIENTS_SERVICE}/patients/${id}`
-        );
+        const response = await PatientService.get(id);
         if (response.ok) {
           const data = await response.json();
           if (shouldCancel) return;
