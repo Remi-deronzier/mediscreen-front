@@ -43,9 +43,18 @@ export default function PatientsPage() {
         role="list"
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4"
       >
-        {patients.map((patient) => (
-          <PatientCard key={patient.id} patient={patient} />
-        ))}
+        {patients.length > 0 ? (
+          patients.map((patient) => (
+            <PatientCard key={patient.id} patient={patient} />
+          ))
+        ) : (
+          <div>
+            <p className="text-2xl font-semibold leading-6 text-gray-900">
+              No patients found
+            </p>
+            <p className="text-sm pt-2">Add a patient to get started</p>
+          </div>
+        )}
       </ul>
     </div>
   );
