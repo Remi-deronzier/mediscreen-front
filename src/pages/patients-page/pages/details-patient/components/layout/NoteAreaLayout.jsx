@@ -2,11 +2,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import LoadingButton from "../../../../../components/buttons/LoadingButton";
-import { UserContext } from "../../../../../context/userContext";
-import NoteService from "../../../../../services/NoteService";
+import LoadingButton from "../../../../../../components/buttons/LoadingButton";
+import { UserContext } from "../../../../../../context/userContext";
 
-export default function NoteArea({ patientId }) {
+export default function NoteAreaLayout({ patientId, defaultValues, submit }) {
   const user = useContext(UserContext);
 
   const textAreaRef = useRef(null);
@@ -15,14 +14,16 @@ export default function NoteArea({ patientId }) {
     textAreaRef.current.focus();
   }, []);
 
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
+
   const yupSchema = yup.object({
     note: yup
       .string()
       .required("Note is required")
       .max(500, "Max 500 characters"),
   });
-
-  const defaultValues = { note: "" };
 
   const {
     register,
@@ -32,7 +33,7 @@ export default function NoteArea({ patientId }) {
     setError,
     clearErrors,
   } = useForm({
-    defaultValue: defaultValues,
+    defaultValues,
     resolver: yupResolver(yupSchema),
   });
 
@@ -45,7 +46,7 @@ export default function NoteArea({ patientId }) {
     };
     try {
       clearErrors();
-      await NoteService.create(payload);
+      await submit(payload);
       reset(defaultValues);
     } catch (error) {
       setError("globalError", {

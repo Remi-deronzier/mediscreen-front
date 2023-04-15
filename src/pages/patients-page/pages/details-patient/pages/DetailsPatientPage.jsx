@@ -8,7 +8,7 @@ import ErrorPage from "../../../../../pages/error-page/ErrorPage";
 import PathService from "../../../../../services/PathService";
 import ReportService from "../../../../../services/ReportService";
 import buildFullName from "../../../../../utils/helpers";
-import NoteArea from "../components/NoteArea";
+import AddNote from "../components/AddNote";
 
 export default function DetailsPatientPage() {
   const { id } = useParams();
@@ -94,7 +94,7 @@ export default function DetailsPatientPage() {
               >
                 See all notes
               </button>
-              <NoteArea patientId={patient.id} />
+              <AddNote patientId={patient.id} />
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
