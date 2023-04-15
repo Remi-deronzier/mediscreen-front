@@ -9,10 +9,11 @@ import DetailsPatientPage from "./pages/patients-page/pages/details-patient/page
 import NotesPatientPage from "./pages/patients-page/pages/details-patient/pages/NotesPatientPage";
 import EditPatientPage from "./pages/patients-page/pages/edit-patient/EditPatient";
 import PatientsPage from "./pages/patients-page/pages/patients/PatientsPage";
+import PathService from "./services/PathService";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: PathService.homePagePath.absolutePath,
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/patients",
+        path: PathService.patientsPagePath.absolutePath,
         element: <PatientsPageLayout />,
         children: [
           {
@@ -29,15 +30,15 @@ export const router = createBrowserRouter([
             element: <PatientsPage />,
           },
           {
-            path: "add",
+            path: PathService.addPatientPagePath.relativePath,
             element: <AddPatientPage />,
           },
           {
-            path: "edit/:id",
+            path: PathService.editPatientPagePath.relativePath,
             element: <EditPatientPage />,
           },
           {
-            path: ":id",
+            path: PathService.detailsPatientPagePath.relativePath,
             element: <DetailsPatientLayout />,
             children: [
               {
@@ -45,7 +46,7 @@ export const router = createBrowserRouter([
                 element: <DetailsPatientPage />,
               },
               {
-                path: "notes",
+                path: PathService.notesPatientPagePath.relativePath,
                 element: <NotesPatientPage />,
               },
             ],

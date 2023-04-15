@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import PathService from "../../services/PathService";
 import { formatDate } from "../../utils/helpers";
 
 export default function PatientForm({ defaultValues, submit }) {
@@ -32,8 +33,7 @@ export default function PatientForm({ defaultValues, submit }) {
 
   let navigate = useNavigate();
   const goToPatientsPage = () => {
-    let path = "/patients";
-    navigate(path);
+    navigate(PathService.patientsPagePath.absolutePath);
   };
 
   const {

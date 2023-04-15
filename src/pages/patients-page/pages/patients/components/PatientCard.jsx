@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../../../../components/loader/Loader";
 import { useDispatchPatients } from "../../../../../context/patientContext";
 import useDeleteData from "../../../../../hooks/useDeleteData";
+import PathService from "../../../../../services/PathService";
 import PatientService from "../../../../../services/PatientService";
 import buildFullName, {
   buildSexAvatar,
@@ -21,13 +22,11 @@ export default function PatientCard({ patient }) {
 
   let navigate = useNavigate();
   const goToEditPage = (id) => {
-    let path = `/patients/edit/${id}`;
-    navigate(path);
+    navigate(PathService.editPatientPagePath.programaticPath(id));
   };
 
   const goToDetailsPage = (id) => {
-    let path = `/patients/${id}`;
-    navigate(path);
+    navigate(PathService.detailsPatientPagePath.programaticPath(id));
   };
 
   return (

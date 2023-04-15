@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../../../components/loader/Loader";
 import useFetchPatient from "../../../../../hooks/useFetchPatient";
 import ErrorPage from "../../../../../pages/error-page/ErrorPage";
+import PathService from "../../../../../services/PathService";
 import ReportService from "../../../../../services/ReportService";
 import buildFullName from "../../../../../utils/helpers";
 import NoteArea from "../components/NoteArea";
@@ -27,8 +28,7 @@ export default function DetailsPatientPage() {
 
   let navigate = useNavigate();
   const goToNotesPatientPage = (id) => {
-    let path = `/patients/${id}/notes`;
-    navigate(path);
+    navigate(PathService.notesPatientPagePath.programaticPath(id));
   };
 
   const downloadPdf = async () => {

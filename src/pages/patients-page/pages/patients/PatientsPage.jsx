@@ -6,6 +6,7 @@ import {
   usePatients,
 } from "../../../../context/patientContext";
 import useFetchData from "../../../../hooks/useFetchData";
+import PathService from "../../../../services/PathService";
 import PatientService from "../../../../services/PatientService";
 import ErrorPage from "../../../error-page/ErrorPage";
 import PatientCard from "./components/PatientCard";
@@ -22,8 +23,7 @@ export default function PatientsPage() {
 
   let navigate = useNavigate();
   const goToAddPatientPage = () => {
-    let path = "/patients/add";
-    navigate(path);
+    navigate(PathService.addPatientPagePath.absolutePath);
   };
 
   if (error) return <ErrorPage />;
