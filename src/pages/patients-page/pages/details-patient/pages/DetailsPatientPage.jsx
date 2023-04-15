@@ -1,15 +1,13 @@
 import { PaperClipIcon } from "@heroicons/react/20/solid";
-import { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../../../components/loader/Loader";
-import { ApiContext } from "../../../../../context/apiContext";
 import useFetchPatient from "../../../../../hooks/useFetchPatient";
 import ErrorPage from "../../../../../pages/error-page/ErrorPage";
+import ReportService from "../../../../../services/ReportService";
 import buildFullName from "../../../../../utils/helpers";
 import NoteArea from "../components/NoteArea";
 
 export default function DetailsPatientPage() {
-  const { BASE_URL_REPORTS_SERVICE } = useContext(ApiContext);
   const { id } = useParams();
   const { isLoading, patient, error } = useFetchPatient(id);
 
@@ -34,9 +32,7 @@ export default function DetailsPatientPage() {
   };
 
   const downloadPdf = async () => {
-    const response = await fetch(
-      `${BASE_URL_REPORTS_SERVICE}/reports/pdf?patientId=${id}`
-    );
+    const response = await ReportService.downloadPdf(id);
     const base64Data = await response.text();
     const link = document.createElement("a");
     link.href = `data:application/pdf;base64,${base64Data}`;
