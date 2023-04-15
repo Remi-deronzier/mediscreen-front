@@ -1,11 +1,14 @@
 import { useParams } from "react-router-dom";
 import Loader from "../../../../components/loader/Loader";
 import useFetchPatient from "../../../../hooks/useFetchPatient";
+import ErrorPage from "../../../../pages/error-page/ErrorPage";
 import PatientForm from "../../../layout/PatientForm";
 
 export default function EditPatientPage() {
   const { id } = useParams();
-  const { isLoading, patient } = useFetchPatient(id);
+  const { isLoading, patient, error } = useFetchPatient(id);
+
+  if (error) return <ErrorPage />;
 
   const defaultValues = {
     firstName: patient.firstName,

@@ -8,6 +8,7 @@ import useFetchPatient from "../../../../../hooks/useFetchPatient";
 import buildFullName, {
   getRandomDoctorName,
 } from "../../../../../utils/helpers";
+import ErrorPage from "../../../../error-page/ErrorPage";
 
 export default function NotesPatientPage() {
   const { BASE_URL_NOTES_SERVICE } = useContext(ApiContext);
@@ -15,12 +16,25 @@ export default function NotesPatientPage() {
   const state = useNotes();
   const dispatch = useDispatchNotes();
 
-  const { isLoadingPatients, patient } = useFetchPatient(id);
-  const { isLoading: isLoadingNotes, data } = useFetchData(
+  const {
+    isLoadingPatients,
+    patient,
+    error: errorPatient,
+  } = useFetchPatient(id);
+
+  if (errorPatient) return <ErrorPage />;
+
+  const {
+    isLoading: isLoadingNotes,
+    data,
+    error: errorNotes,
+  } = useFetchData(
     `${BASE_URL_NOTES_SERVICE}/notes/patient/${id}`,
     dispatch,
     state
   );
+
+  if (errorNotes) return <ErrorPage />;
 
   const notes = data.map((note) => {
     return { ...note, doctor: getRandomDoctorName() };

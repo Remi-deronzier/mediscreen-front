@@ -4,13 +4,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../../../components/loader/Loader";
 import { ApiContext } from "../../../../../context/apiContext";
 import useFetchPatient from "../../../../../hooks/useFetchPatient";
+import ErrorPage from "../../../../../pages/error-page/ErrorPage";
 import buildFullName from "../../../../../utils/helpers";
 import NoteArea from "../components/NoteArea";
 
 export default function DetailsPatientPage() {
   const { BASE_URL_REPORTS_SERVICE } = useContext(ApiContext);
   const { id } = useParams();
-  const { isLoading, patient } = useFetchPatient(id);
+  const { isLoading, patient, error } = useFetchPatient(id);
+
+  if (error) return <ErrorPage />;
 
   function toAsciiString(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");

@@ -8,6 +8,7 @@ import {
   usePatients,
 } from "../../../../context/patientContext";
 import useFetchData from "../../../../hooks/useFetchData";
+import ErrorPage from "../../../error-page/ErrorPage";
 import PatientCard from "./components/PatientCard";
 
 export default function PatientsPage() {
@@ -15,17 +16,19 @@ export default function PatientsPage() {
   const state = usePatients();
   const dispatch = useDispatchPatients();
 
-  const { isLoading, data: patients } = useFetchData(
-    `${BASE_URL_API}/patients`,
-    dispatch,
-    state
-  );
+  const {
+    isLoading,
+    data: patients,
+    error,
+  } = useFetchData(`${BASE_URL_API}/patients`, dispatch, state);
 
   let navigate = useNavigate();
   const routeChange = () => {
     let path = "/patients/add";
     navigate(path);
   };
+
+  if (error) return <ErrorPage />;
 
   return isLoading ? (
     <Loader />
