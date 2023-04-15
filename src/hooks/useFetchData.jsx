@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SET_DATA } from "../constants/actionTypes";
 
-export default function useFetchData(url, dispatch, state) {
+export default function useFetchData(dispatch, state, request) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -9,7 +9,7 @@ export default function useFetchData(url, dispatch, state) {
     let shouldCancel = false;
     async function fetchData() {
       try {
-        const response = await fetch(url);
+        const response = await request();
         if (response.ok) {
           const data = await response.json();
           if (shouldCancel) return;

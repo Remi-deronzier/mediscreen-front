@@ -1,18 +1,16 @@
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../../components/loader/Loader";
-import { ApiContext } from "../../../../context/apiContext";
 import {
   useDispatchPatients,
   usePatients,
 } from "../../../../context/patientContext";
 import useFetchData from "../../../../hooks/useFetchData";
+import PatientService from "../../../../services/PatientService";
 import ErrorPage from "../../../error-page/ErrorPage";
 import PatientCard from "./components/PatientCard";
 
 export default function PatientsPage() {
-  const { BASE_URL_PATIENTS_SERVICE } = useContext(ApiContext);
   const state = usePatients();
   const dispatch = useDispatchPatients();
 
@@ -20,7 +18,7 @@ export default function PatientsPage() {
     isLoading,
     data: patients,
     error,
-  } = useFetchData(`${BASE_URL_PATIENTS_SERVICE}/patients`, dispatch, state);
+  } = useFetchData(dispatch, state, PatientService.getAll);
 
   let navigate = useNavigate();
   const routeChange = () => {

@@ -1,17 +1,15 @@
-import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../../../../../components/loader/Loader";
-import { ApiContext } from "../../../../../context/apiContext";
 import { useDispatchNotes, useNotes } from "../../../../../context/noteContext";
 import useFetchData from "../../../../../hooks/useFetchData";
 import useFetchPatient from "../../../../../hooks/useFetchPatient";
+import NoteService from "../../../../../services/NoteService";
 import buildFullName, {
   getRandomDoctorName,
 } from "../../../../../utils/helpers";
 import ErrorPage from "../../../../error-page/ErrorPage";
 
 export default function NotesPatientPage() {
-  const { BASE_URL_NOTES_SERVICE } = useContext(ApiContext);
   const { id } = useParams();
   const state = useNotes();
   const dispatch = useDispatchNotes();
@@ -28,11 +26,7 @@ export default function NotesPatientPage() {
     isLoading: isLoadingNotes,
     data,
     error: errorNotes,
-  } = useFetchData(
-    `${BASE_URL_NOTES_SERVICE}/notes/patient/${id}`,
-    dispatch,
-    state
-  );
+  } = useFetchData(dispatch, state, () => NoteService.findByPatientId(id));
 
   if (errorNotes) return <ErrorPage />;
 

@@ -2,12 +2,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { ApiContext } from "../../../../../context/apiContext";
 import { UserContext } from "../../../../../context/userContext";
+import NoteService from "../../../../../services/NoteService";
 
 export default function NoteArea({ patientId }) {
   const user = useContext(UserContext);
-  const { BASE_URL_NOTES_SERVICE } = useContext(ApiContext);
 
   const yupSchema = yup.object({
     note: yup
@@ -37,13 +36,7 @@ export default function NoteArea({ patientId }) {
     };
     try {
       clearErrors();
-      await fetch(`${BASE_URL_NOTES_SERVICE}/notes`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      await NoteService.create(payload);
       reset(defaultValues);
     } catch (error) {
       setError("globalError", {
