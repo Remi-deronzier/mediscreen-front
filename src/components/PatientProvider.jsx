@@ -6,7 +6,7 @@ import {
 import patientReducer from "../reducers/patientReducer";
 
 export default function PatientProvider({ children }) {
-  const [patients, dispatch] = useReducer(patientReducer, { patients: [] });
+  const [patients, dispatch] = useReducer(patientReducer, { data: [] });
 
   return (
     <patientsStateContext.Provider value={patients}>

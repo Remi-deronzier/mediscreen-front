@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import manAvatar from "../../../../../assets/images/avatar-man.png";
 import womanAvatar from "../../../../../assets/images/avatar-woman.png";
 import Loader from "../../../../../components/loader/Loader";
-import { DELETE_PATIENT } from "../../../../../constants/actionTypes";
+import { DELETE_DATA } from "../../../../../constants/actionTypes";
 import { ApiContext } from "../../../../../context/apiContext";
 import { useDispatchPatients } from "../../../../../context/patientContext";
 import buildFullName from "../../../../../utils/helpers";
@@ -47,7 +47,7 @@ export default function PatientCard({ patient }) {
       await fetch(`${BASE_URL_API}/patients/${id}`, {
         method: "DELETE",
       });
-      dispatch({ type: DELETE_PATIENT, id });
+      dispatch({ type: DELETE_DATA, id });
     } catch (error) {
       alert("Une erreur est survenue");
     } finally {

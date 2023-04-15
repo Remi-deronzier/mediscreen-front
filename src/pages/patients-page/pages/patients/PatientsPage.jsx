@@ -3,13 +3,23 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../../components/loader/Loader";
 import { ApiContext } from "../../../../context/apiContext";
-import useFetchPatients from "../../../../hooks/useFetchPatients";
+import {
+  useDispatchPatients,
+  usePatients,
+} from "../../../../context/patientContext";
+import useFetchData from "../../../../hooks/useFetchData";
 import PatientCard from "./components/PatientCard";
 
 export default function PatientsPage() {
   const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
+  const state = usePatients();
+  const dispatch = useDispatchPatients();
 
-  const { isLoading, patients } = useFetchPatients(`${BASE_URL_API}/patients`);
+  const { isLoading, data: patients } = useFetchData(
+    `${BASE_URL_API}/patients`,
+    dispatch,
+    state
+  );
 
   let navigate = useNavigate();
   const routeChange = () => {

@@ -1,16 +1,16 @@
-import { DELETE_PATIENT, SET_PATIENTS } from "../constants/actionTypes";
+import { DELETE_DATA, SET_DATA } from "../constants/actionTypes";
 
 export default function patientReducer(state, action) {
   switch (action.type) {
-    case SET_PATIENTS:
+    case SET_DATA:
       return {
         ...state,
-        patients: action.patients,
+        data: action.data,
       };
-    case DELETE_PATIENT:
+    case DELETE_DATA:
       return {
         ...state,
-        patients: state.patients.filter((patient) => patient.id !== action.id),
+        data: state.data.filter((patient) => patient.id !== action.id),
       };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);

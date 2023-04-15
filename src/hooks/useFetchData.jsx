@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react";
-import { SET_PATIENTS } from "../constants/actionTypes";
-import { useDispatchPatients, usePatients } from "../context/patientContext";
+import { SET_DATA } from "../constants/actionTypes";
 
-export default function useFetchPatients(url) {
+export default function useFetchData(url, dispatch, state) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const state = usePatients();
-  const dispatch = useDispatchPatients();
 
   useEffect(() => {
     let shouldCancel = false;
-    async function fetchPatients() {
+    async function fetchData() {
       try {
         const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
           if (shouldCancel) return;
-          dispatch({ type: SET_PATIENTS, patients: data.content });
+          dispatch({ type: SET_DATA, data: data.content });
         } else {
           alert("Une erreur est survenue");
         }
@@ -27,11 +24,11 @@ export default function useFetchPatients(url) {
         setIsLoading(false);
       }
     }
-    fetchPatients();
+    fetchData();
     return () => {
       shouldCancel = true;
     };
   }, []);
 
-  return { isLoading, patients: state.patients, error };
+  return { isLoading, data: state.data, error };
 }

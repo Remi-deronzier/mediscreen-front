@@ -1,2 +1,2 @@
-export const DELETE_PATIENT = "DELETE_PATIENT";
-export const SET_PATIENTS = "SET_PATIENTS";
+export const DELETE_DATA = "DELETE_DATA";
+export const SET_DATA = "SET_DATA";
