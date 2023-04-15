@@ -18,3 +18,12 @@ export function getRandomDoctorName() {
   const randomIndex = Math.floor(Math.random() * doctors.length);
   return doctors[randomIndex];
 }
+
+export function formatDate(date) {
+  const dateLocal = new Date(date);
+  const year = dateLocal.getFullYear();
+  const month = (dateLocal.getMonth() + 1).toString().padStart(2, "0");
+  const day = dateLocal.getDate().toString().padStart(2, "0");
+  const dateString = `${year}-${month}-${day}`;
+  return dateString;
+}
