@@ -34,7 +34,12 @@ export default function NotesPatientPage() {
 
   let navigate = useNavigate();
   const goToDetailsPage = (id) => {
-    navigate(PathService.detailsPatientPagePath.programaticPath(id));
+    navigate(
+      PathService.detailsPatientPagePath.programaticPath(
+        id,
+        PathService.mode.add.value
+      )
+    );
   };
 
   const {
@@ -121,7 +126,7 @@ export default function NotesPatientPage() {
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
                     {notes.map((note) => (
-                      <NoteTile note={note} key={note.id} />
+                      <NoteTile note={note} key={note.id} patientId={id} />
                     ))}
                   </tbody>
                 </table>

@@ -1,6 +1,6 @@
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import LoadingButton from "../../../../../components/buttons/LoadingButton";
 import Loader from "../../../../../components/loader/Loader";
 import useFetchData from "../../../../../hooks/useFetchData";
@@ -9,10 +9,12 @@ import PathService from "../../../../../services/PathService";
 import PatientService from "../../../../../services/PatientService";
 import ReportService from "../../../../../services/ReportService";
 import buildFullName from "../../../../../utils/helpers";
-import AddNote from "../components/AddNote";
 
 export default function DetailsPatientPage() {
   const { id } = useParams();
+  const [queryParams] = useSearchParams();
+  const mode = queryParams.get("mode");
+
   const {
     isLoading,
     data: patient,
@@ -106,7 +108,7 @@ export default function DetailsPatientPage() {
               >
                 See all notes
               </button>
-              <AddNote patientId={patient.id} />
+              {PathService.mode[mode].component(patient.id)}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

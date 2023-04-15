@@ -2,7 +2,7 @@ import NoteService from "../../../../../services/NoteService";
 import NoteAreaLayout from "./layout/NoteAreaLayout";
 
 export default function AddNote({ patientId }) {
-  const defaultValues = { note: "" };
+  const defaultValues = { content: "" };
 
   async function submit(payload) {
     try {

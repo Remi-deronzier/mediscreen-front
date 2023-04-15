@@ -26,7 +26,12 @@ export default function PatientCard({ patient }) {
   };
 
   const goToDetailsPage = (id) => {
-    navigate(PathService.detailsPatientPagePath.programaticPath(id));
+    navigate(
+      PathService.detailsPatientPagePath.programaticPath(
+        id,
+        PathService.mode.add.value
+      )
+    );
   };
 
   return (

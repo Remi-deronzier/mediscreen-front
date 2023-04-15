@@ -1,3 +1,6 @@
+import AddNote from "../pages/patients-page/pages/details-patient/components/AddNote";
+import EditNote from "../pages/patients-page/pages/details-patient/components/EditNote";
+
 const homePagePath = {
   absolutePath: "/",
   relativePath: "/",
@@ -25,13 +28,27 @@ const editPatientPagePath = {
 const detailsPatientPagePath = {
   absolutePath: "/patients/:id",
   relativePath: ":id",
-  programaticPath: (id) => `/patients/${id}`,
+  programaticPath: (id, mode, noteId) =>
+    `/patients/${id}?mode=${mode}&noteId=${noteId || ""}`,
 };
 
 const notesPatientPagePath = {
   absolutePath: "/patients/:id/notes",
   relativePath: "notes",
   programaticPath: (id) => `/patients/${id}/notes`,
+};
+
+const mode = {
+  add: {
+    value: "add",
+    component: (patientId) => <AddNote patientId={patientId} />,
+  },
+  edit: {
+    value: "edit",
+    component: (patientId, noteId) => (
+      <EditNote patientId={patientId} noteId={noteId} />
+    ),
+  },
 };
 
 const PathService = {
@@ -41,6 +58,7 @@ const PathService = {
   editPatientPagePath,
   detailsPatientPagePath,
   notesPatientPagePath,
+  mode,
 };
 
 export default PathService;

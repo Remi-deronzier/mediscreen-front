@@ -1,12 +1,25 @@
+import { useNavigate } from "react-router-dom";
 import LoadingButton from "../../../../../components/buttons/LoadingButton";
 import { useDispatchNotes } from "../../../../../context/noteContext";
 import useDeleteData from "../../../../../hooks/useDeleteData";
 import NoteService from "../../../../../services/NoteService";
+import PathService from "../../../../../services/PathService";
 
-export default function NoteTile({ note }) {
+export default function NoteTile({ note, patientId }) {
   const dispatch = useDispatchNotes();
 
   const { isLoading, deleteData } = useDeleteData(dispatch, NoteService);
+
+  const navigate = useNavigate();
+  const goToEditPage = (noteId) => {
+    navigate(
+      PathService.detailsPatientPagePath.programaticPath(
+        patientId,
+        PathService.mode.edit.value,
+        noteId
+      )
+    );
+  };
 
   return (
     <tr key={note.id}>
@@ -22,7 +35,15 @@ export default function NoteTile({ note }) {
         <p>{note.content}</p>
       </td>
       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-        <button className="text-indigo-600 hover:text-indigo-900">Edit</button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            goToEditPage(note.id);
+          }}
+          className="text-indigo-600 hover:text-indigo-900"
+        >
+          Edit
+        </button>
       </td>
       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
         <LoadingButton
