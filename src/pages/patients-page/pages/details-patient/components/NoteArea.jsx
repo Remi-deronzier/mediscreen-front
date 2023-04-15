@@ -10,7 +10,10 @@ export default function NoteArea({ patientId }) {
   const { BASE_URL_NOTES_SERVICE: BASE_URL_API } = useContext(ApiContext);
 
   const yupSchema = yup.object({
-    note: yup.string().required("Note is required"),
+    note: yup
+      .string()
+      .required("Note is required")
+      .max(500, "Max 500 characters"),
   });
 
   const defaultValues = { note: "" };
