@@ -7,7 +7,7 @@ import { UserContext } from "../../../../../context/userContext";
 
 export default function NoteArea({ patientId }) {
   const user = useContext(UserContext);
-  const { BASE_URL_NOTES_SERVICE: BASE_URL_API } = useContext(ApiContext);
+  const { BASE_URL_NOTES_SERVICE } = useContext(ApiContext);
 
   const yupSchema = yup.object({
     note: yup
@@ -37,7 +37,7 @@ export default function NoteArea({ patientId }) {
     };
     try {
       clearErrors();
-      await fetch(`${BASE_URL_API}/notes`, {
+      await fetch(`${BASE_URL_NOTES_SERVICE}/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

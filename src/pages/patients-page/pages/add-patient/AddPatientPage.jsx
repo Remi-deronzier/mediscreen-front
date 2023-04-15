@@ -3,7 +3,7 @@ import { ApiContext } from "../../../../context/apiContext";
 import PatientForm from "../../../layout/PatientForm";
 
 export default function AddPatientPage() {
-  const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
+  const { BASE_URL_PATIENTS_SERVICE } = useContext(ApiContext);
 
   const defaultValues = {
     firstName: "",
@@ -16,7 +16,7 @@ export default function AddPatientPage() {
 
   async function submit(payload) {
     try {
-      await fetch(`${BASE_URL_API}/patients`, {
+      await fetch(`${BASE_URL_PATIENTS_SERVICE}/patients`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

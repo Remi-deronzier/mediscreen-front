@@ -21,7 +21,7 @@ const sexTypes = {
 };
 
 export default function PatientCard({ patient }) {
-  const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
+  const { BASE_URL_PATIENTS_SERVICE } = useContext(ApiContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatchPatients();
@@ -44,7 +44,7 @@ export default function PatientCard({ patient }) {
   const handleDeletePatient = async (id) => {
     try {
       setIsLoading(true);
-      await fetch(`${BASE_URL_API}/patients/${id}`, {
+      await fetch(`${BASE_URL_PATIENTS_SERVICE}/patients/${id}`, {
         method: "DELETE",
       });
       dispatch({ type: DELETE_DATA, id });

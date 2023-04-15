@@ -12,7 +12,7 @@ import ErrorPage from "../../../error-page/ErrorPage";
 import PatientCard from "./components/PatientCard";
 
 export default function PatientsPage() {
-  const { BASE_URL_PATIENTS_SERVICE: BASE_URL_API } = useContext(ApiContext);
+  const { BASE_URL_PATIENTS_SERVICE } = useContext(ApiContext);
   const state = usePatients();
   const dispatch = useDispatchPatients();
 
@@ -20,7 +20,7 @@ export default function PatientsPage() {
     isLoading,
     data: patients,
     error,
-  } = useFetchData(`${BASE_URL_API}/patients`, dispatch, state);
+  } = useFetchData(`${BASE_URL_PATIENTS_SERVICE}/patients`, dispatch, state);
 
   let navigate = useNavigate();
   const routeChange = () => {
