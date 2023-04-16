@@ -8,18 +8,14 @@ export default function useFetchPaginatedData(dispatch, state, request, page) {
   useEffect(() => {
     let shouldCancel = false;
     async function fetchData() {
-      console.log(page);
       try {
         const response = await request(page);
         if (response.ok) {
           const newData = await response.json();
           if (shouldCancel) return;
-          const potentialNewData = newData.content.filter(
-            (item) => !state.data.some((data) => data.id === item.id)
-          );
           dispatch({
             type: SET_DATA,
-            data: [...state.data, ...potentialNewData],
+            data: [...state.data, ...newData.content],
           });
         } else {
           alert("Une erreur est survenue");
