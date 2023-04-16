@@ -1,7 +1,11 @@
-import { BASE_URL_NOTES_SERVICE, NOTES_RESOURCE } from "../constants/api";
+import {
+  BASE_URL_NOTES_SERVICE,
+  NOTES_RESOURCE,
+  PAGINATION_SIZE,
+} from "../constants/api";
 
 const getAll = () => {
-  return fetch(`${BASE_URL_NOTES_SERVICE}/${NOTES_RESOURCE}}`);
+  return fetch(`${BASE_URL_NOTES_SERVICE}/${NOTES_RESOURCE}`);
 };
 
 const get = (id) => {
@@ -34,8 +38,12 @@ const remove = (id) => {
   });
 };
 
-const findByPatientId = (id) => {
-  return fetch(`${BASE_URL_NOTES_SERVICE}/${NOTES_RESOURCE}/patient/${id}`);
+const findByPatientId = (id, page) => {
+  return fetch(
+    `${BASE_URL_NOTES_SERVICE}/${NOTES_RESOURCE}/patient/${id}?page=${
+      page - 1
+    }&size=${PAGINATION_SIZE}`
+  );
 };
 
 const NoteService = {
