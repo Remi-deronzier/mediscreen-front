@@ -1,7 +1,15 @@
-import { BASE_URL_PATIENTS_SERVICE, PATIENTS_RESOURCE } from "../constants/api";
+import {
+  BASE_URL_PATIENTS_SERVICE,
+  PAGINATION_SIZE,
+  PATIENTS_RESOURCE,
+} from "../constants/api";
 
-const getAll = () => {
-  return fetch(`${BASE_URL_PATIENTS_SERVICE}/${PATIENTS_RESOURCE}`);
+const getAll = (page) => {
+  return fetch(
+    `${BASE_URL_PATIENTS_SERVICE}/${PATIENTS_RESOURCE}?page=${
+      page - 1
+    }&size=${PAGINATION_SIZE}`
+  );
 };
 
 const get = (id) => {

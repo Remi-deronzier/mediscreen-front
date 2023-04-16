@@ -59,7 +59,7 @@ export default function PatientCard({ patient }) {
           <div className="flex items-center gap-x-2 text-gray-500">
             <MapPinIcon className="h-4 w-4" aria-hidden="true" />
             <p className="mt-1 truncate text-sm">
-              {patient.address.slice(0, 25)}
+              {patient.address.slice(0, 30)}
             </p>
           </div>
           <div className="flex items-center gap-x-2 text-gray-500">
